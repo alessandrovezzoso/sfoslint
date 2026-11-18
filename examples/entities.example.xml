@@ -168,4 +168,22 @@
     </NetworkPolicy>
   </FirewallRule>
 
+  <FirewallRule>
+    <Name>Blocca IP malevoli</Name>
+    <Description>Blocca traffico da Internet</Description>
+    <IPFamily>IPv4</IPFamily>
+    <Status>Enable</Status>
+    <PolicyType>Network</PolicyType>
+    <NetworkPolicy>
+      <Action>Drop</Action>
+      <LogTraffic>Enable</LogTraffic>
+      <SourceZones>
+        <Zone>WAN</Zone>
+      </SourceZones>
+      <DestinationZones>
+        <Zone>LAN</Zone>
+      </DestinationZones>
+    </NetworkPolicy>
+  </FirewallRule>
+
 </Configuration>

@@ -12,6 +12,7 @@ from rich.console import Console
 from rich.markup import escape
 from rich.panel import Panel
 from rich.table import Table
+from rich import box
 
 console = Console()
 
@@ -99,7 +100,7 @@ if not findings:
     console.print("[bold green]No issues found.[/]")
     sys.exit(0)
 
-table = Table(header_style="bold", border_style="dim")
+table = Table(header_style="bold", border_style="dim", box=box.ROUNDED)
 table.add_column("Severity")
 table.add_column("Rule", style="bold")
 table.add_column("Finding")

@@ -74,16 +74,16 @@ Running `python sfoslint.py examples/entities.example.xml`:
 ╭───────────────────────────────────────────────────────────────────────╮
 │ sfoslint · analyzing examples/entities.example.xml · 10 rules checked │
 ╰───────────────────────────────────────────────────────────────────────╯
-┏━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Severity ┃ Rule                 ┃ Finding                                     ┃
-┡━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+╭──────────┬──────────────────────┬─────────────────────────────────────────────╮
+│ Severity │ Rule                 │ Finding                                     │
+├──────────┼──────────────────────┼─────────────────────────────────────────────┤
 │ CRITICAL │ Accesso NAS da fuori │ exposes SMB to anyone on the Internet       │
 │ CRITICAL │ RDP per assistenza   │ exposes RDP to anyone on the Internet       │
 │ HIGH     │ Webcam da fuori      │ accepts traffic from anyone on the Internet │
 │ HIGH     │ Accesso misto        │ accepts traffic from anyone on the Internet │
 │ HIGH     │ Regola senza zona    │ accepts traffic from anyone on the Internet │
 │ INFO     │ Vecchia regola test  │ rule is disabled, consider deleting it      │
-└──────────┴──────────────────────┴─────────────────────────────────────────────┘
+╰──────────┴──────────────────────┴─────────────────────────────────────────────╯
 6 findings: 2 critical · 3 high · 1 info
 ```
 

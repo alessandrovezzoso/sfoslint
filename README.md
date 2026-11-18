@@ -50,11 +50,11 @@ pip install -r requirements.txt
 2. Export the full configuration and download the `.tar` file.
 3. Extract it and copy `Entities.xml` into the `private/` folder of this project.
 
-> [!NOTE]
-> The `private/` folder and any file named `Entities.xml` or `entities.xml` are excluded by `.gitignore`.
-
 > [!CAUTION]
 > `Entities.xml` contains sensitive information about your network, users and VPNs. Never commit it, share it, or upload it anywhere.
+
+> [!NOTE]
+> The `private/` folder and any file named `Entities.xml` or `entities.xml` are excluded by `.gitignore`.
 
 ## Usage
 

@@ -226,7 +226,7 @@ __marimo__/
 # Real firewall exports
 private/
 *.tar
-Entities.xml
+[Ee]ntities.xml
 
 # MacOS 
 .DS_Store

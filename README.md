@@ -4,7 +4,9 @@
 
 sfoslint reads a configuration export (`Entities.xml`) and flags firewall rules that expose your network to risk, such as remote desktop open to the whole Internet.
 
-> **Status:** early development. The checks below work, but the tool is still evolving. See the [roadmap](#roadmap).
+> [!WARNING]
+> **Status:** early development.
+> (see [Roadmap](#roadmap)).
 
 ## Why
 

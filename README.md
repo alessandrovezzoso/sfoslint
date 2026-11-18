@@ -37,7 +37,7 @@ Each rule is reported once, with its most severe finding.
 ## Installation
 
 ```bash
-git clone https://github.com/<your-username>/sfoslint.git
+git clone https://github.com/alessandrovezzoso/sfoslint.git
 cd sfoslint
 python3 -m venv .venv
 source .venv/bin/activate
@@ -50,9 +50,11 @@ pip install -r requirements.txt
 2. Export the full configuration and download the `.tar` file.
 3. Extract it and copy `Entities.xml` into the `private/` folder of this project.
 
-The `private/` folder and any file named `Entities.xml` are excluded by `.gitignore`.
+> [!NOTE]
+> The `private/` folder and any file named `Entities.xml` or `entities.xml` are excluded by `.gitignore`.
 
-> ⚠️ `Entities.xml` contains sensitive information about your network, users and VPNs. Never commit it, share it, or upload it anywhere.
+> [!CAUTION]
+> `Entities.xml` contains sensitive information about your network, users and VPNs. Never commit it, share it, or upload it anywhere.
 
 ## Usage
 

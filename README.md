@@ -28,7 +28,7 @@ It works **offline** on an exported file:
 
 "Anyone on the Internet" means: the source zones include `WAN` or `Any` (or are not set), the source network is `Any` (not set), and the action is `Accept`.
 
-Each rule is reported once, with its most severe finding.
+Each rule gets at most one exposure finding (the most severe one). Findings are listed from the most to the least severe, followed by a summary.
 
 ## Requirements
 
@@ -64,18 +64,27 @@ python sfoslint.py private/Entities.xml
 ```
 
 Without arguments, sfoslint analyzes the sample configuration in `examples/entities.example.xml` and tells you so.
+If no firewall rules are found in the file, sfoslint prints a warning and exits with code 1, so an empty report is never mistaken for a clean one.
 
 ## Example output
 
 Running `python sfoslint.py examples/entities.example.xml`:
 
 ```
-[CRITICAL] Accesso NAS da fuori: exposes SMB to anyone on the Internet
-[CRITICAL] RDP per assistenza: exposes RDP to anyone on the Internet
-[INFO] Vecchia regola test: rule is disabled, consider deleting it
-[HIGH] Webcam da fuori: accepts traffic from anyone on the Internet
-[HIGH] Accesso misto: accepts traffic from anyone on the Internet
-[HIGH] Regola senza zona: accepts traffic from anyone on the Internet
+╭───────────────────────────────────────────────────────────────────────╮
+│ sfoslint · analyzing examples/entities.example.xml · 10 rules checked │
+╰───────────────────────────────────────────────────────────────────────╯
+┏━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Severity ┃ Rule                 ┃ Finding                                     ┃
+┡━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ CRITICAL │ Accesso NAS da fuori │ exposes SMB to anyone on the Internet       │
+│ CRITICAL │ RDP per assistenza   │ exposes RDP to anyone on the Internet       │
+│ HIGH     │ Webcam da fuori      │ accepts traffic from anyone on the Internet │
+│ HIGH     │ Accesso misto        │ accepts traffic from anyone on the Internet │
+│ HIGH     │ Regola senza zona    │ accepts traffic from anyone on the Internet │
+│ INFO     │ Vecchia regola test  │ rule is disabled, consider deleting it      │
+└──────────┴──────────────────────┴─────────────────────────────────────────────┘
+6 findings: 2 critical · 3 high · 1 info
 ```
 
 In the terminal, CRITICAL findings are shown in red, HIGH in orange and INFO in cyan.

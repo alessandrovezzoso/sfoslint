@@ -62,3 +62,6 @@ for rule in rules:
         console.print(f"[bold red][CRITICAL][/] {escape(name)}: exposes {risky_services_text} to anyone on the Internet")
     elif exposed:
         console.print(f"[bold orange1][HIGH][/] {escape(name)}: accepts traffic from anyone on the Internet")
+
+    if status == "Disable":
+        console.print(f"[bold cyan][INFO][/] {escape(name)}: rule is disabled, consider deleting it")

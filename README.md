@@ -24,6 +24,7 @@ It works **offline** on an exported file:
 |---|---|
 | **CRITICAL** | Active rule that accepts traffic from anyone on the Internet to a risky service (RDP, SMB, Telnet, FTP, VNC, MSSQL, MySQL, PostgreSQL) |
 | **HIGH** | Active rule that accepts traffic from anyone on the Internet |
+| **INFO** | Disabled rule: harmless today, but it can be re-enabled by mistake and clutters the rule base |
 
 "Anyone on the Internet" means: the source zones include `WAN` or `Any` (or are not set), the source network is `Any` (not set), and the action is `Accept`.
 
@@ -71,6 +72,7 @@ Running sfoslint on the sample configuration:
 ```
 [CRITICAL] Accesso NAS da fuori: exposes SMB to anyone on the Internet
 [CRITICAL] RDP per assistenza: exposes RDP to anyone on the Internet
+[INFO] Vecchia regola test: rule is disabled, consider deleting it
 [HIGH] Webcam da fuori: accepts traffic from anyone on the Internet
 [HIGH] Accesso misto: accepts traffic from anyone on the Internet
 [HIGH] Regola senza zona: accepts traffic from anyone on the Internet
@@ -101,7 +103,7 @@ In the terminal, CRITICAL findings are shown in red and HIGH findings in orange.
 - [x] Handle multiple, missing and explicit "Any" source zones
 - [ ] Refactor checks into functions, report multiple findings per rule
 - [ ] Check: Accept rules without logging
-- [ ] Check: disabled rules
+- [x] Check: disabled rules
 - [ ] Check: WAN rules with Any service
 - [ ] Take the config file path as a command-line argument
 - [ ] Add pytest tests

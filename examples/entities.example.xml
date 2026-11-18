@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  FILE INVENTATO PER ESERCIZIO - non viene da nessun firewall reale.
+  La struttura segue la documentazione pubblica dell'XML API di Sophos Firewall
+  (lo stesso formato usato in Entities.xml), ma semplificata: un export vero
+  ha molti piu' campi e molte piu' entita'.
+
+  Dentro ci sono 6 regole firewall. Alcune sono normali, alcune sono
+  volutamente problematiche. Prima di scrivere codice, prova a trovare
+  a occhio quali sono quelle rischiose e perche'.
+-->
+<Configuration APIVersion="2105.1" IPS_CAT_VER="1">
+
+  <!-- Oggetti host: danno un nome agli indirizzi IP -->
+  <IPHost>
+    <Name>NAS-Ufficio</Name>
+    <IPFamily>IPv4</IPFamily>
+    <HostType>IP</HostType>
+    <IPAddress>192.168.10.20</IPAddress>
+  </IPHost>
+  <IPHost>
+    <Name>PC-Contabilita</Name>
+    <IPFamily>IPv4</IPFamily>
+    <HostType>IP</HostType>
+    <IPAddress>192.168.10.55</IPAddress>
+  </IPHost>
+  <IPHost>
+    <Name>Server-Gestionale</Name>
+    <IPFamily>IPv4</IPFamily>
+    <HostType>IP</HostType>
+    <IPAddress>192.168.10.10</IPAddress>
+  </IPHost>
+  <IPHost>
+    <Name>Rete-VPN</Name>
+    <IPFamily>IPv4</IPFamily>
+    <HostType>Network</HostType>
+    <IPAddress>10.8.0.0</IPAddress>
+    <Subnet>255.255.255.0</Subnet>
+  </IPHost>
+
+  <!-- Regole firewall -->
+  <FirewallRule>
+    <Name>LAN verso Internet</Name>
+    <Description>Navigazione degli utenti</Description>
+    <IPFamily>IPv4</IPFamily>
+    <Status>Enable</Status>
+    <PolicyType>Network</PolicyType>
+    <NetworkPolicy>
+      <Action>Accept</Action>
+      <LogTraffic>Enable</LogTraffic>
+      <SourceZones>
+        <Zone>LAN</Zone>
+      </SourceZones>
+      <DestinationZones>
+        <Zone>WAN</Zone>
+      </DestinationZones>
+    </NetworkPolicy>
+  </FirewallRule>
+
+  <FirewallRule>
+    <Name>Accesso NAS da fuori</Name>
+    <Description>Messa dal tecnico precedente, non so perche'</Description>
+    <IPFamily>IPv4</IPFamily>
+    <Status>Enable</Status>
+    <PolicyType>Network</PolicyType>
+    <NetworkPolicy>
+      <Action>Accept</Action>
+      <LogTraffic>Disable</LogTraffic>
+      <SourceZones>
+        <Zone>WAN</Zone>
+      </SourceZones>
+      <DestinationZones>
+        <Zone>LAN</Zone>
+      </DestinationZones>
+      <DestinationNetworks>
+        <Network>NAS-Ufficio</Network>
+      </DestinationNetworks>
+      <Services>
+        <Service>HTTPS</Service>
+      </Services>
+    </NetworkPolicy>
+  </FirewallRule>
+
+  <FirewallRule>
+    <Name>RDP per assistenza</Name>
+    <Description>Accesso remoto al PC della contabilita'</Description>
+    <IPFamily>IPv4</IPFamily>
+    <Status>Enable</Status>
+    <PolicyType>Network</PolicyType>
+    <NetworkPolicy>
+      <Action>Accept</Action>
+      <LogTraffic>Enable</LogTraffic>
+      <SourceZones>
+        <Zone>WAN</Zone>
+      </SourceZones>
+      <DestinationZones>
+        <Zone>LAN</Zone>
+      </DestinationZones>
+      <DestinationNetworks>
+        <Network>PC-Contabilita</Network>
+      </DestinationNetworks>
+      <Services>
+        <Service>RDP</Service>
+      </Services>
+    </NetworkPolicy>
+  </FirewallRule>
+
+  <FirewallRule>
+    <Name>VPN verso gestionale</Name>
+    <Description>Utenti in smart working</Description>
+    <IPFamily>IPv4</IPFamily>
+    <Status>Enable</Status>
+    <PolicyType>Network</PolicyType>
+    <NetworkPolicy>
+      <Action>Accept</Action>
+      <LogTraffic>Enable</LogTraffic>
+      <SourceZones>
+        <Zone>VPN</Zone>
+      </SourceZones>
+      <DestinationZones>
+        <Zone>LAN</Zone>
+      </DestinationZones>
+      <SourceNetworks>
+        <Network>Rete-VPN</Network>
+      </SourceNetworks>
+      <DestinationNetworks>
+        <Network>Server-Gestionale</Network>
+      </DestinationNetworks>
+      <Services>
+        <Service>HTTPS</Service>
+      </Services>
+    </NetworkPolicy>
+  </FirewallRule>
+
+  <FirewallRule>
+    <Name>Vecchia regola test</Name>
+    <Description>test</Description>
+    <IPFamily>IPv4</IPFamily>
+    <Status>Disable</Status>
+    <PolicyType>Network</PolicyType>
+    <NetworkPolicy>
+      <Action>Accept</Action>
+      <LogTraffic>Disable</LogTraffic>
+      <SourceZones>
+        <Zone>LAN</Zone>
+      </SourceZones>
+      <DestinationZones>
+        <Zone>DMZ</Zone>
+      </DestinationZones>
+    </NetworkPolicy>
+  </FirewallRule>
+
+  <FirewallRule>
+    <Name>Blocca ospiti verso LAN</Name>
+    <Description>Il Wi-Fi ospiti non deve vedere la rete interna</Description>
+    <IPFamily>IPv4</IPFamily>
+    <Status>Enable</Status>
+    <PolicyType>Network</PolicyType>
+    <NetworkPolicy>
+      <Action>Drop</Action>
+      <LogTraffic>Enable</LogTraffic>
+      <SourceZones>
+        <Zone>GUEST</Zone>
+      </SourceZones>
+      <DestinationZones>
+        <Zone>LAN</Zone>
+      </DestinationZones>
+    </NetworkPolicy>
+  </FirewallRule>
+
+</Configuration>

@@ -26,8 +26,16 @@ RISKY_SERVICES = {
 root = parse("examples/entities.example.xml").getroot()
 #root = parse("private/Entities.xml").getroot()
 
+
+rules = root.findall("FirewallRule")
+
+# Some SFOS versions export rules under a different tag (e.g. <SecurityPolicy>).
+# If nothing is found, say so: an empty report must never look like a clean one.
+if not rules:
+    console.print("[yellow]WARNING: no firewall rules found. Is this an Entities.xml export?[/]")
+
 # Check every firewall rule
-for rule in root.findall("FirewallRule"):
+for rule in rules:
     name = rule.findtext("Name")
     status = rule.findtext("Status")
     action = rule.findtext("NetworkPolicy/Action")

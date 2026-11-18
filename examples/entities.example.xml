@@ -77,6 +77,7 @@
       </DestinationNetworks>
       <Services>
         <Service>HTTPS</Service>
+        <Service>SMB</Service>
       </Services>
     </NetworkPolicy>
   </FirewallRule>
@@ -183,6 +184,30 @@
       <DestinationZones>
         <Zone>LAN</Zone>
       </DestinationZones>
+    </NetworkPolicy>
+  </FirewallRule>
+
+    <FirewallRule>
+    <Name>Webcam da fuori</Name>
+    <Description>Accesso alla webcam</Description>
+    <IPFamily>IPv4</IPFamily>
+    <Status>Enable</Status>
+    <PolicyType>Network</PolicyType>
+    <NetworkPolicy>
+      <Action>Accept</Action>
+      <LogTraffic>Enable</LogTraffic>
+      <SourceZones>
+        <Zone>WAN</Zone>
+      </SourceZones>
+      <DestinationZones>
+        <Zone>LAN</Zone>
+      </DestinationZones>
+      <DestinationNetworks>
+        <Network>WEBCAM-01</Network>
+      </DestinationNetworks>
+      <Services>
+        <Service>HTTP</Service>
+      </Services>
     </NetworkPolicy>
   </FirewallRule>
 

@@ -211,4 +211,44 @@
     </NetworkPolicy>
   </FirewallRule>
 
+  <FirewallRule>
+    <Name>Accesso misto</Name>
+    <Description>Test: multiple source zones, WAN is not the first one</Description>
+    <IPFamily>IPv4</IPFamily>
+    <Status>Enable</Status>
+    <PolicyType>Network</PolicyType>
+    <NetworkPolicy>
+      <Action>Accept</Action>
+      <LogTraffic>Enable</LogTraffic>
+      <SourceZones>
+        <Zone>LAN</Zone>
+        <Zone>WAN</Zone>
+      </SourceZones>
+      <DestinationZones>
+        <Zone>LAN</Zone>
+      </DestinationZones>
+      <Services>
+        <Service>HTTPS</Service>
+      </Services>
+    </NetworkPolicy>
+  </FirewallRule>
+
+  <FirewallRule>
+    <Name>Regola senza zona</Name>
+    <Description>Test: no source zone means Any, Internet included</Description>
+    <IPFamily>IPv4</IPFamily>
+    <Status>Enable</Status>
+    <PolicyType>Network</PolicyType>
+    <NetworkPolicy>
+      <Action>Accept</Action>
+      <LogTraffic>Enable</LogTraffic>
+      <DestinationZones>
+        <Zone>DMZ</Zone>
+      </DestinationZones>
+      <Services>
+        <Service>HTTP</Service>
+      </Services>
+    </NetworkPolicy>
+  </FirewallRule>
+
 </Configuration>

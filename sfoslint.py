@@ -5,7 +5,7 @@ Reads an Entities.xml export and flags risky firewall rules.
 
 # defusedxml instead of the standard library because it blocks malicious XML
 from defusedxml.ElementTree import parse
-#
+# rich: colored terminal output
 from rich.console import Console
 from rich.markup import escape
 
@@ -26,12 +26,16 @@ RISKY_SERVICES = {
 root = parse("examples/entities.example.xml").getroot()
 #root = parse("private/Entities.xml").getroot()
 
+# Check every firewall rule
 for rule in root.findall("FirewallRule"):
     name = rule.findtext("Name")
     status = rule.findtext("Status")
     action = rule.findtext("NetworkPolicy/Action")
-    # TODO: a rule can have several source zones; only the first one is checked
-    zone = rule.findtext("NetworkPolicy/SourceZones/Zone")
+    zones = [z.text for z in rule.findall("NetworkPolicy/SourceZones/Zone")]
+    # Sophos docs: unset source zones apply the rule to any source.
+    # "Any" can also be written explicitly as a zone.
+    zones_any = rule.find("NetworkPolicy/SourceZones") is None or "Any" in zones
+    from_wan = "WAN" in zones or zones_any
     # In SFOS a missing <SourceNetworks> element means the source is "Any"
     source_any = rule.find("NetworkPolicy/SourceNetworks") is None
 
@@ -42,7 +46,7 @@ for rule in root.findall("FirewallRule"):
             risky_services.append(s.text)
 
     # Active rule that lets anyone on the Internet in
-    exposed = status == "Enable" and zone == "WAN" and source_any and action == "Accept"
+    exposed = status == "Enable" and from_wan and source_any and action == "Accept"
 
     # Report each rule only once, with its most severe finding
     if exposed and risky_services:

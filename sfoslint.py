@@ -2,7 +2,7 @@
 
 Reads an Entities.xml export and flags risky firewall rules.
 """
-
+import sys
 # defusedxml instead of the standard library because it blocks malicious XML
 from defusedxml.ElementTree import parse
 # rich: colored terminal output
@@ -23,8 +23,14 @@ RISKY_SERVICES = {
     "PostgreSQL": 5432,
 }
 
-root = parse("examples/entities.example.xml").getroot()
-#root = parse("private/Entities.xml").getroot()
+# Use the file passed on the command line, or the sample config by default
+if len(sys.argv) > 1:
+    path = sys.argv[1]
+else:
+    path = "examples/entities.example.xml"
+    console.print(f"[dim]No file given: analyzing the sample configuration ({path}).[/]")
+    console.print("[dim]Usage: python sfoslint.py <path/to/Entities.xml>[/]")
+root = parse(path).getroot()
 
 
 rules = root.findall("FirewallRule")

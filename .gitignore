@@ -221,3 +221,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+###################################################################################################
+# Real firewall exports
+private/
+*.tar
+Entities.xml
+
+# MacOS 
+.DS_Store

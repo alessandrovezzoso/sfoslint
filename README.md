@@ -60,14 +60,14 @@ pip install -r requirements.txt
 ## Usage
 
 ```bash
-python sfoslint.py
+python sfoslint.py private/Entities.xml
 ```
 
-By default sfoslint analyzes the sample configuration in `examples/entities.example.xml`. To analyze your own export, change the path at the top of `sfoslint.py` to `private/Entities.xml`. Passing the path as a command-line argument is on the roadmap.
+Without arguments, sfoslint analyzes the sample configuration in `examples/entities.example.xml` and tells you so.
 
 ## Example output
 
-Running sfoslint on the sample configuration:
+Running `python sfoslint.py examples/entities.example.xml`:
 
 ```
 [CRITICAL] Accesso NAS da fuori: exposes SMB to anyone on the Internet
@@ -78,7 +78,7 @@ Running sfoslint on the sample configuration:
 [HIGH] Regola senza zona: accepts traffic from anyone on the Internet
 ```
 
-In the terminal, CRITICAL findings are shown in red and HIGH findings in orange.
+In the terminal, CRITICAL findings are shown in red, HIGH in orange and INFO in cyan.
 
 ## Sample configuration
 
@@ -88,6 +88,7 @@ In the terminal, CRITICAL findings are shown in red and HIGH findings in orange.
 
 - XML is parsed with [defusedxml](https://pypi.org/project/defusedxml/), which protects against malicious XML (e.g. XXE attacks).
 - Rule names come from the configuration file and are escaped before being printed.
+- If no firewall rules are found, sfoslint prints a warning: an empty report never hides a failed analysis.
 
 ## Known limitations
 
@@ -105,7 +106,8 @@ In the terminal, CRITICAL findings are shown in red and HIGH findings in orange.
 - [ ] Check: Accept rules without logging
 - [x] Check: disabled rules
 - [ ] Check: WAN rules with Any service
-- [ ] Take the config file path as a command-line argument
+- [x] Take the config file path as a command-line argument
+- [x] Warn when no firewall rules are found
 - [ ] Add pytest tests
 - [ ] Handle rule exclusions
 - [ ] Resolve service groups and match risky services by port

@@ -33,7 +33,7 @@ Each rule gets at most one exposure finding (the most severe one). Findings are 
 ## Requirements
 
 - Python 3.9 or later
-- A Sophos Firewall configuration export (`Entities.xml`)
+- A Sophos Firewall configuration export from **SFOS v18 or later** (`Entities.xml`)
 
 ## Installation
 
@@ -65,15 +65,16 @@ python sfoslint.py private/Entities.xml
 
 Without arguments, sfoslint analyzes the sample configuration in `examples/entities.example.xml` and tells you so.
 If no firewall rules are found in the file, sfoslint prints a warning and exits with code 1, so an empty report is never mistaken for a clean one.
+sfoslint reads the firmware version from the export. Exports from versions older than SFOS v18 use a different rule format, so sfoslint stops with an error. If the version is missing or unreadable, it prints a warning and continues.
 
 ## Example output
 
 Running `python sfoslint.py examples/entities.example.xml`:
 
 ```
-╭───────────────────────────────────────────────────────────────────────╮
-│ sfoslint · analyzing examples/entities.example.xml · 10 rules checked │
-╰───────────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────────────────╮
+│ sfoslint · Analyzing examples/entities.example.xml · SFOS API 2105.1 · 10 rules checked │
+╰─────────────────────────────────────────────────────────────────────────────────────────╯
 ╭──────────┬──────────────────────┬─────────────────────────────────────────────╮
 │ Severity │ Rule                 │ Finding                                     │
 ├──────────┼──────────────────────┼─────────────────────────────────────────────┤

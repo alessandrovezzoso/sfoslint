@@ -24,11 +24,12 @@ It works **offline** on an exported file:
 |---|---|
 | **CRITICAL** | Active rule that accepts traffic from anyone on the Internet to a risky service (RDP, SMB, Telnet, FTP, VNC, MSSQL, MySQL, PostgreSQL) |
 | **HIGH** | Active rule that accepts traffic from anyone on the Internet |
+| **MEDIUM** | Active rule that accepts traffic without logging it: nobody can see what passes through |
 | **INFO** | Disabled rule: harmless today, but it can be re-enabled by mistake and clutters the rule base |
 
 "Anyone on the Internet" means: the source zones include `WAN` or `Any` (or are not set), the source network is `Any` (not set), and the action is `Accept`.
 
-Each rule gets at most one exposure finding (the most severe one). Findings are listed from the most to the least severe, followed by a summary.
+A rule can have several findings if it has several problems (for example, exposed to the Internet and not logged), because each one needs its own fix. For exposure, only the most severe finding is kept. Findings are listed from the most to the least severe, followed by a summary.
 
 ## Requirements
 
@@ -83,12 +84,14 @@ Running `python sfoslint.py examples/entities.example.xml`:
 │ HIGH     │ Webcam da fuori      │ accepts traffic from anyone on the Internet │
 │ HIGH     │ Accesso misto        │ accepts traffic from anyone on the Internet │
 │ HIGH     │ Regola senza zona    │ accepts traffic from anyone on the Internet │
+│ MEDIUM   │ Accesso NAS da fuori │ accepts traffic without logging it          │
 │ INFO     │ Vecchia regola test  │ rule is disabled, consider deleting it      │
 ╰──────────┴──────────────────────┴─────────────────────────────────────────────╯
-6 findings: 2 critical · 3 high · 1 info
+7 findings: 2 critical · 3 high · 1 medium · 1 info
+
 ```
 
-In the terminal, CRITICAL findings are shown in red, HIGH in orange and INFO in cyan.
+In the terminal, CRITICAL findings are shown in red, HIGH in orange, MEDIUM in yellow and INFO in cyan.
 
 ## Sample configuration
 
@@ -112,8 +115,8 @@ In the terminal, CRITICAL findings are shown in red, HIGH in orange and INFO in 
 - [x] Flag WAN rules accepting traffic from any source
 - [x] Flag risky services exposed to the Internet
 - [x] Handle multiple, missing and explicit "Any" source zones
-- [ ] Refactor checks into functions, report multiple findings per rule
-- [ ] Check: Accept rules without logging
+- [x] Refactor checks into functions, report multiple findings per rule
+- [x] Check: Accept rules without logging
 - [x] Check: disabled rules
 - [ ] Check: WAN rules with Any service
 - [x] Take the config file path as a command-line argument
@@ -121,6 +124,7 @@ In the terminal, CRITICAL findings are shown in red, HIGH in orange and INFO in 
 - [ ] Add pytest tests
 - [ ] Handle rule exclusions
 - [ ] Resolve service groups and match risky services by port
+- [ ] Optional view grouped by rule (`--group-by-rule`)
 
 ## Related projects
 

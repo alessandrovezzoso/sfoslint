@@ -36,6 +36,10 @@ SEVERITY_STYLES = {
     "INFO": "bold cyan",
 }
 
+# Before SFOS v18, firewall rules used a different format (<SecurityPolicy>)
+MIN_SUPPORTED_MAJOR = 18
+
+
 # Use the file passed on the command line, or the sample config by default
 if len(sys.argv) > 1:
     path = sys.argv[1]
@@ -45,6 +49,23 @@ else:
     console.print("[dim]Usage: python sfoslint.py <path/to/Entities.xml>[/]")
 
 root = parse(path).getroot()
+
+api_version = root.get("APIVersion", "unknown")
+
+# APIVersion starts with the firmware major version: "1905.1" is SFOS 19.5
+try:
+    major = int(api_version[:2])
+except ValueError:
+    major = None
+
+# Stop only when we know the format is unsupported; otherwise warn and go on
+if major is None:
+    console.print(f"[yellow]WARNING: unknown API version ({escape(api_version)}), results may be incomplete.[/]")
+elif major < MIN_SUPPORTED_MAJOR:
+    console.print(f"[bold red]ERROR: this export comes from SFOS v{major}, which uses an older format. "
+                  f"sfoslint supports SFOS v{MIN_SUPPORTED_MAJOR} and later.[/]")
+    sys.exit(1)
+
 rules = root.findall("FirewallRule")
 
 # Some SFOS versions export rules under a different tag (e.g. <SecurityPolicy>).
@@ -92,7 +113,8 @@ for rule in rules:
 
 # Header: which file was analyzed and how many rules were checked
 console.print(Panel.fit(
-    f"[bold]sfoslint[/] · analyzing [cyan]{escape(path)}[/] · {len(rules)} rules checked",
+    f"[bold]sfoslint[/] · Analyzing [cyan]{escape(path)}[/] · "
+    f"SFOS API {escape(api_version)} · {len(rules)} rules checked",
     border_style="dim",
 ))
 

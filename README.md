@@ -121,6 +121,10 @@ In the terminal, CRITICAL findings are shown in red, HIGH in orange and INFO in 
 - [ ] Handle rule exclusions
 - [ ] Resolve service groups and match risky services by port
 
+## Related projects
+
+- [sophos-firewall-audit](https://github.com/sophos/sophos-firewall-audit) — the official Sophos tool. It connects to live firewalls through the API and checks system settings (admin access, threat protection, logging, notifications) against a baseline. sfoslint is complementary: it works offline on an export and analyzes how firewall rules are written.
+
 ## Disclaimer
 
 sfoslint is an independent project. It is not affiliated with, endorsed by, or supported by Sophos. Sophos and Sophos Firewall are trademarks of their respective owners.

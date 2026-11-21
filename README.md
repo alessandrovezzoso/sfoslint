@@ -110,6 +110,8 @@ In the terminal, CRITICAL findings are shown in red, HIGH in orange, MEDIUM in y
 - Rule exclusions are ignored.
 - Only firewall rules are analyzed (not NAT, VPN or system settings).
 
+See [docs/FORMAT.md](docs/FORMAT.md) for what sfoslint knows about the export format and what is still unverified.
+
 ## Roadmap
 
 - [x] Flag WAN rules accepting traffic from any source

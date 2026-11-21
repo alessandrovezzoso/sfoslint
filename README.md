@@ -74,21 +74,21 @@ Running `python sfoslint.py examples/entities.example.xml`:
 
 ```
 ╭─────────────────────────────────────────────────────────────────────────────────────────╮
-│ sfoslint · Analyzing examples/entities.example.xml · SFOS API 2105.1 · 10 rules checked │
+│ sfoslint · Analyzing examples/entities.example.xml · SFOS API 2105.1 · 11 rules checked │
 ╰─────────────────────────────────────────────────────────────────────────────────────────╯
-╭──────────┬──────────────────────┬─────────────────────────────────────────────╮
-│ Severity │ Rule                 │ Finding                                     │
-├──────────┼──────────────────────┼─────────────────────────────────────────────┤
-│ CRITICAL │ Accesso NAS da fuori │ exposes SMB to anyone on the Internet       │
-│ CRITICAL │ RDP per assistenza   │ exposes RDP to anyone on the Internet       │
-│ HIGH     │ Webcam da fuori      │ accepts traffic from anyone on the Internet │
-│ HIGH     │ Accesso misto        │ accepts traffic from anyone on the Internet │
-│ HIGH     │ Regola senza zona    │ accepts traffic from anyone on the Internet │
-│ MEDIUM   │ Accesso NAS da fuori │ accepts traffic without logging it          │
-│ INFO     │ Vecchia regola test  │ rule is disabled, consider deleting it      │
-╰──────────┴──────────────────────┴─────────────────────────────────────────────╯
-7 findings: 2 critical · 3 high · 1 medium · 1 info
-
+╭──────────┬──────────────────────┬─────────────────────────────────────────────────────────────╮
+│ Severity │ Rule                 │ Finding                                                     │
+├──────────┼──────────────────────┼─────────────────────────────────────────────────────────────┤
+│ CRITICAL │ Accesso NAS da fuori │ exposes SMB to anyone on the Internet                       │
+│ CRITICAL │ RDP per assistenza   │ exposes RDP to anyone on the Internet                       │
+│ CRITICAL │ Server DMZ           │ exposes all services (every port) to anyone on the Internet │
+│ HIGH     │ Webcam da fuori      │ accepts traffic from anyone on the Internet                 │
+│ HIGH     │ Accesso misto        │ accepts traffic from anyone on the Internet                 │
+│ HIGH     │ Regola senza zona    │ accepts traffic from anyone on the Internet                 │
+│ MEDIUM   │ Accesso NAS da fuori │ accepts traffic without logging it                          │
+│ INFO     │ Vecchia regola test  │ rule is disabled, consider deleting it                      │
+╰──────────┴──────────────────────┴─────────────────────────────────────────────────────────────╯
+8 findings: 3 critical · 3 high · 1 medium · 1 info
 ```
 
 In the terminal, CRITICAL findings are shown in red, HIGH in orange, MEDIUM in yellow and INFO in cyan.

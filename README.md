@@ -22,7 +22,7 @@ It works **offline** on an exported file:
 
 | Severity | Finding |
 |---|---|
-| **CRITICAL** | Active rule that accepts traffic from anyone on the Internet to a risky service (RDP, SMB, Telnet, FTP, VNC, MSSQL, MySQL, PostgreSQL) |
+| **CRITICAL** | Active rule that accepts traffic from anyone on the Internet to every service (no service restriction) or to a risky service (RDP, SMB, Telnet, FTP, VNC, MSSQL, MySQL, PostgreSQL) |
 | **HIGH** | Active rule that accepts traffic from anyone on the Internet |
 | **MEDIUM** | Active rule that accepts traffic without logging it: nobody can see what passes through |
 | **INFO** | Disabled rule: harmless today, but it can be re-enabled by mistake and clutters the rule base |
@@ -118,7 +118,7 @@ In the terminal, CRITICAL findings are shown in red, HIGH in orange, MEDIUM in y
 - [x] Refactor checks into functions, report multiple findings per rule
 - [x] Check: Accept rules without logging
 - [x] Check: disabled rules
-- [ ] Check: WAN rules with Any service
+- [x] Check: WAN rules with Any service
 - [x] Take the config file path as a command-line argument
 - [x] Warn when no firewall rules are found
 - [ ] Add pytest tests

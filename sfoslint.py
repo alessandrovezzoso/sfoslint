@@ -100,6 +100,8 @@ def read_rules(rule):
         # In SFOS a missing <SourceNetworks> element means the source is "Any"
         "source_any": rule.find("NetworkPolicy/SourceNetworks") is None,
         "services": [s.text for s in rule.findall("NetworkPolicy/Services/Service")],
+        # TODO: verify on a real export that a missing <Services> element means "Any"
+        "services_any": rule.find("NetworkPolicy/Services") is None,
         "log": rule.findtext("NetworkPolicy/LogTraffic"),
     }
 
@@ -113,6 +115,10 @@ def check_exposure(r):
     exposed = r["status"] == "Enable" and r["from_wan"] and r["source_any"] and r["action"] == "Accept"
     if not exposed:
         return[]
+
+    # No service restriction: every port is open to the Internet
+    if r["services_any"]:
+        return [("CRITICAL", r["name"], "exposes all services (every port) to anyone on the Internet")]
 
     # Keep only the most severe exposure finding for each rule
     risky_services = [s for s in r["services"] if s in RISKY_SERVICES]

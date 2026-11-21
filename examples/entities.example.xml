@@ -251,4 +251,22 @@
     </NetworkPolicy>
   </FirewallRule>
 
+  <FirewallRule>
+    <Name>Server DMZ</Name>
+    <Description>Test: no services means every port is open</Description>
+    <IPFamily>IPv4</IPFamily>
+    <Status>Enable</Status>
+    <PolicyType>Network</PolicyType>
+    <NetworkPolicy>
+      <Action>Accept</Action>
+      <LogTraffic>Enable</LogTraffic>
+      <SourceZones>
+        <Zone>WAN</Zone>
+      </SourceZones>
+      <DestinationZones>
+        <Zone>DMZ</Zone>
+      </DestinationZones>
+    </NetworkPolicy>
+  </FirewallRule>
+
 </Configuration>
